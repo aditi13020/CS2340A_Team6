@@ -28,6 +28,8 @@
 
         <activity android:name=".GameActivity" android:parentActivityName=".MainActivity"></activity>
 
+        <activity android:name=".LeaderBoard" android:parentActivityName=".MainActivity"></activity>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
