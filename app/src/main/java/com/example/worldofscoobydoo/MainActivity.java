@@ -22,7 +22,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Button exitButton = findViewById(R.id.exitButton);
-        exitButton.setOnClickListener(v -> this.finishAffinity());
+        exitButton.setOnClickListener(x -> {
+            this.finishAffinity();
 
+        });
     }
 }
