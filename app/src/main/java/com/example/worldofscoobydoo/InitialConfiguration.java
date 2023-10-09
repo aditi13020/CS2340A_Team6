@@ -6,12 +6,12 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 public class InitialConfiguration extends AppCompatActivity {
     private String name;
     private String sprite;
+    private Player player = Player.getPlayer();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +45,6 @@ public class InitialConfiguration extends AppCompatActivity {
             default:
             }
 
-
             switch (spriteRadioGroup.getCheckedRadioButtonId()) {
             case R.id.ScoobyBtn:
                 sprite = "scooby";
@@ -75,7 +74,8 @@ public class InitialConfiguration extends AppCompatActivity {
             } else {
                 Intent game = new Intent(InitialConfiguration.this, GameActivity.class);
                 game.putExtra("difficulty", difficulty);
-                game.putExtra("name", name);
+                // game.putExtra("name", name);
+                player.setName(name);
                 game.putExtra("sprite", sprite);
                 startActivity(game);
                 finish();

@@ -2,6 +2,7 @@ package com.example.worldofscoobydoo;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.Button;
@@ -9,21 +10,26 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
 public class GameActivity extends AppCompatActivity {
 
     private String name;
     private double difficulty;
+    private ArrayList<String> users = Player.getPlayer().getHistoryOfNames();
+    private ArrayList<Integer> scores = Player.getPlayer().getHistoryOfScores();
     private String sprite;
     private int score = 100;
     public TextView scoreTextView;
     private Handler handler = new Handler();
+    private Player player = Player.getPlayer();
 
     @SuppressLint({"WrongViewCast", "MissingInflatedId"})
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_activity);
 
-        name = getIntent().getStringExtra("name");
+        name = player.getName();
         difficulty = getIntent().getDoubleExtra("difficulty", 1);
         sprite = getIntent().getStringExtra("sprite");
 
@@ -70,12 +76,16 @@ public class GameActivity extends AppCompatActivity {
         exitButton.setOnClickListener(v -> {
             // Stop the score updater when exiting the game
             handler.removeCallbacks(scoreUpdater);
+            player.setScore(score);
+            users.add(name);
+            scores.add(score);
+            player.setHistoryOfNames(users);
+            player.setScores(scores);
             Intent game = new Intent(GameActivity.this, EndScreen.class);
             startActivity(game);
             finish();
         });
     }
-
     // Helper method to update the score on the screen
     private void updateScore(int sc) {
         scoreTextView.setText(Integer.toString(sc));
